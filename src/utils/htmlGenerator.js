@@ -236,7 +236,7 @@ export function generateHtml(cards, categories) {
   <body>
       <div class="print-instructions">
           <h1>TriviaLab Cards</h1>
-          <p>Your trivia cards are ready to print! Follow these instructions for best results:</p>
+          <p>Your trivia cards are ready to print! Follow these instructions for the best results:</p>
           
           <h2>Printing Instructions</h2>
           <ol>
