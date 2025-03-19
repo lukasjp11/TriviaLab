@@ -15,7 +15,7 @@ export function generateHtml(cards, categories) {
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>TriviaForge Cards</title>
+      <title>TriviaLab Cards</title>
       <style>
           @media print {
               @page {
@@ -242,7 +242,7 @@ export function generateHtml(cards, categories) {
   </head>
   <body>
       <div class="print-instructions">
-          <h1>TriviaForge Cards</h1>
+          <h1>TriviaLab Cards</h1>
           <p>Your trivia cards are ready to print! Follow these instructions for best results:</p>
           
           <h2>Printing Instructions</h2>
@@ -267,7 +267,7 @@ export function generateHtml(cards, categories) {
           <button onclick="window.print()" class="print-button">Print Cards</button>
           
           <div class="branding">
-              Created with TriviaForge - https://triviaforge.com
+              Created with TriviaLab
           </div>
       </div>`;
   

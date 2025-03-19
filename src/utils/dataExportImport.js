@@ -7,7 +7,7 @@
  * @param {Object} data - The data to export
  * @param {string} filename - Filename for the exported file
  */
-export function exportData(data, filename = 'triviaforge-backup.json') {
+export function exportData(data, filename = 'trivialab-backup.json') {
     try {
       // Format the JSON with indentation for readability
       const jsonString = JSON.stringify(data, null, 2);
@@ -93,5 +93,5 @@ export function exportData(data, filename = 'triviaforge-backup.json') {
   export function createBackup(cards, categories) {
     const data = prepareExportData(cards, categories);
     const timestamp = new Date().toISOString().replace(/:/g, '-').substring(0, 19);
-    exportData(data, `triviaforge-backup-${timestamp}.json`);
+    exportData(data, `trivialab-backup-${timestamp}.json`);
   }

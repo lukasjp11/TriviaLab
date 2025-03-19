@@ -21,7 +21,7 @@ const WelcomeModal = ({ onClose }) => {
             <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full">
               <HelpCircle className="text-blue-600 dark:text-blue-400" size={24} />
             </div>
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Welcome to TriviaForge</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Welcome to TriviaLab</h2>
           </div>
           <button
             onClick={onClose}
@@ -32,10 +32,6 @@ const WelcomeModal = ({ onClose }) => {
         </div>
 
         <div className="p-6">
-          <p className="text-gray-700 dark:text-gray-300 mb-6">
-            Welcome to TriviaForge, your tool for creating professional-quality trivia cards. Let's get you started with the basics:
-          </p>
-
           <div className="space-y-6">
             <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
               <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-2">Getting Started</h3>
@@ -56,7 +52,7 @@ const WelcomeModal = ({ onClose }) => {
                   <h3 className="font-semibold text-gray-800 dark:text-white">Create Cards</h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Add questions and answers for each category. Every card you create will be saved automatically.
+                  Add questions and answers for each category.
                 </p>
               </div>
 
@@ -92,7 +88,7 @@ const WelcomeModal = ({ onClose }) => {
                   <h3 className="font-semibold text-gray-800 dark:text-white">Automatic Saving</h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Your work is automatically saved in your browser. You can safely close the app and return later.
+                  Your work is automatically saved in your browser cache, but to be shure, you can export your data at any time.
                 </p>
               </div>
             </div>
@@ -100,9 +96,6 @@ const WelcomeModal = ({ onClose }) => {
             <div className="text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg">
               <p className="mb-2">
                 <strong>Pro Tip:</strong> For best results when printing, use double-sided printing and select "Flip on short edge" in your printer settings.
-              </p>
-              <p>
-                Need more help? Check out our <a href="#" className="text-blue-500 hover:underline">Help Guide</a> for detailed instructions.
               </p>
             </div>
           </div>
