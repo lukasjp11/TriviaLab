@@ -4,7 +4,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3.0-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/Vite-4.4.0-646CFF?logo=vite)](https://vitejs.dev/)
 
-TriviaLab is a modern, feature-rich web application for creating customizable trivia cards that can be printed or shared digitally. Perfect for teachers, and trivia enthusiasts looking to create trivia cards with ease.
+TriviaLab is a modern, feature-rich web application for creating customizable trivia cards that can be printed or shared digitally. Perfect for pastors, teachers, and trivia enthusiasts looking to create trivia cards with ease.
 
 ## 🖨️ Printing Guide
 
