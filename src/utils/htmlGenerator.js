@@ -264,34 +264,41 @@ export function generateHtml(cards, categories) {
           </div>
       </div>`;
   
-    html += `
+    const cardsPerPage = 6;
+    
+    for (let pageStart = 0; pageStart < cards.length; pageStart += cardsPerPage) {
+      const pageEnd = Math.min(pageStart + cardsPerPage, cards.length);
+      const pageCards = cards.slice(pageStart, pageEnd);
+      
+      html += `
       <!-- QUESTIONS PAGE -->
       <div class="container questions-container">`;
       
-    cards.forEach((card, index) => {
-      html += `
-          <!-- Card ${index + 1} -->
+      pageCards.forEach((card, index) => {
+        const cardNumber = pageStart + index + 1;
+        html += `
+          <!-- Card ${cardNumber} -->
           <div class="card">
               <div class="card-inner">`;
         
-      categories.forEach(category => {
-        const questionData = card.questions.find(q => q.category === category.name);
-        if (questionData && questionData.question) {
-          html += `
+        categories.forEach(category => {
+          const questionData = card.questions.find(q => q.category === category.name);
+          if (questionData && questionData.question) {
+            html += `
                   <div class="category">
                       <div class="marker ${category.name.toLowerCase().replace(/\s+/g, '-')}-marker"></div>
                       <div class="category-content">${questionData.question}</div>
                   </div>`;
-        }
-      });
+          }
+        });
         
-      html += `
-                  <div class="card-number">${index + 1}</div>
+        html += `
+                  <div class="card-number">${cardNumber}</div>
               </div>
           </div>`;
-    });
+      });
       
-    html += `
+      html += `
       </div>
   
       <div class="page-break"></div>
@@ -299,32 +306,53 @@ export function generateHtml(cards, categories) {
       <!-- ANSWERS PAGE -->
       <div class="container answers-container">`;
       
-    [...cards].reverse().forEach((card, reversedIndex) => {
-      const index = cards.length - reversedIndex - 1;
-      html += `
-          <!-- Card ${index + 1} Answers -->
+      const arrangedAnswers = [];
+      
+      for (let i = 0; i < pageCards.length; i += 2) {
+        if (i + 1 < pageCards.length) {
+          arrangedAnswers.push(pageCards[i + 1]);
+          arrangedAnswers.push(pageCards[i]);
+        } else {
+          arrangedAnswers.push(pageCards[i]);
+        }
+      }
+      
+      arrangedAnswers.forEach((card, index) => {
+        const originalIndex = cards.indexOf(card);
+        const cardNumber = originalIndex + 1;
+        
+        html += `
+          <!-- Card ${cardNumber} Answers -->
           <div class="card">
               <div class="card-inner upside-down">`;
         
-      categories.forEach(category => {
-        const questionData = card.questions.find(q => q.category === category.name);
-        if (questionData && questionData.question) {
-          html += `
+        categories.forEach(category => {
+          const questionData = card.questions.find(q => q.category === category.name);
+          if (questionData && questionData.question) {
+            html += `
                   <div class="category">
                       <div class="marker ${category.name.toLowerCase().replace(/\s+/g, '-')}-marker"></div>
                       <div class="category-content">${questionData.answer || 'No answer provided'}</div>
                   </div>`;
-        }
-      });
+          }
+        });
         
-      html += `
-                  <div class="card-number">${index + 1}</div>
+        html += `
+                  <div class="card-number">${cardNumber}</div>
               </div>
           </div>`;
-    });
+      });
       
+      html += `
+      </div>`;
+      
+      if (pageEnd < cards.length) {
+        html += `
+        <div class="page-break"></div>`;
+      }
+    }
+    
     html += `
-      </div>
   </body>
   </html>`;
   
