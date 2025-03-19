@@ -3,6 +3,7 @@ import { Plus, Edit2, Trash2, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { generateId, ERRORS, SUCCESS } from '../../utils/constants';
+import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
 
 const CategoryManager = ({ 
   categories, 
@@ -11,7 +12,7 @@ const CategoryManager = ({
   cards,
   setCards
 }) => {
-  const [showConfirmDelete, setShowConfirmDelete] = useState(null);
+  const [categoryToDelete, setCategoryToDelete] = useState(null);
   
   const handleAddCategory = () => {
     // Show prompt for new category name
@@ -43,19 +44,20 @@ const CategoryManager = ({
     setEditingCategory({ ...category, originalName: category.name });
   };
   
-  const handleDeleteCategory = (categoryId) => {
-    setShowConfirmDelete(null);
-    
+  const handleShowDeleteConfirm = (category) => {
     if (categories.length <= 1) {
       toast.error(ERRORS.MIN_CATEGORIES);
       return;
     }
     
-    const categoryToDelete = categories.find(cat => cat.id === categoryId);
+    setCategoryToDelete(category);
+  };
+  
+  const handleDeleteCategory = () => {
     if (!categoryToDelete) return;
     
     // Remove this category
-    const updatedCategories = categories.filter(cat => cat.id !== categoryId);
+    const updatedCategories = categories.filter(cat => cat.id !== categoryToDelete.id);
     setCategories(updatedCategories);
     
     // Remove this category from all cards
@@ -64,6 +66,9 @@ const CategoryManager = ({
       questions: card.questions.filter(q => q.category !== categoryToDelete.name)
     }));
     setCards(updatedCards);
+    
+    // Clear the deletion state
+    setCategoryToDelete(null);
     
     toast.success(SUCCESS.CATEGORY_DELETED);
   };
@@ -110,36 +115,13 @@ const CategoryManager = ({
               </button>
               
               <button 
-                onClick={() => setShowConfirmDelete(category.id)}
+                onClick={() => handleShowDeleteConfirm(category)}
                 className="p-1.5 bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 rounded-md hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
                 title="Delete category"
+                disabled={categories.length <= 1}
               >
                 <Trash2 size={16} />
               </button>
-              
-              {showConfirmDelete === category.id && (
-                <div className="absolute right-0 mt-8 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-3 border dark:border-gray-700 z-10 w-60">
-                  <div className="flex items-start gap-2 mb-2 text-red-600 dark:text-red-400">
-                    <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
-                    <p className="text-sm">Delete this category and remove it from all cards?</p>
-                  </div>
-                  
-                  <div className="flex justify-end gap-2 mt-3">
-                    <button 
-                      onClick={() => setShowConfirmDelete(null)}
-                      className="px-3 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded"
-                    >
-                      Cancel
-                    </button>
-                    <button 
-                      onClick={() => handleDeleteCategory(category.id)}
-                      className="px-3 py-1 text-xs bg-red-600 text-white rounded"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         ))}
@@ -151,6 +133,20 @@ const CategoryManager = ({
           <p>You must have at least one category.</p>
         </div>
       )}
+
+      {/* Delete Category Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={categoryToDelete !== null}
+        onClose={() => setCategoryToDelete(null)}
+        onConfirm={handleDeleteCategory}
+        title="Delete Category"
+        message={
+          `Are you sure you want to delete the category "${categoryToDelete?.name}"? ` +
+          "This will remove it from all cards. This action cannot be undone."
+        }
+        confirmButtonText="Delete Category"
+        type="danger"
+      />
     </motion.div>
   );
 };

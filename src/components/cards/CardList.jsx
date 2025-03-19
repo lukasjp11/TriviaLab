@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Edit2, Trash2, ArrowDownUp } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { SUCCESS } from '../../utils/constants';
+import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
 
 const CardList = ({ cards, categories, setCards, onEditCard }) => {
-  const handleDeleteCard = (cardId) => {
-    if (confirm('Are you sure you want to delete this card?')) {
-      setCards(cards.filter(card => card.id !== cardId));
-      toast.success(SUCCESS.CARD_DELETED);
-    }
+  const [cardToDelete, setCardToDelete] = useState(null);
+
+  const showDeleteConfirmation = (card) => {
+    setCardToDelete(card);
+  };
+
+  const handleDeleteCard = () => {
+    if (!cardToDelete) return;
+    
+    setCards(cards.filter(card => card.id !== cardToDelete.id));
+    toast.success(SUCCESS.CARD_DELETED);
+    setCardToDelete(null);
   };
 
   const handleEditCard = (card) => {
@@ -20,6 +28,9 @@ const CardList = ({ cards, categories, setCards, onEditCard }) => {
   };
 
   const renderCardPreview = (card, index) => {
+    // Get the first question as a title for the card (for delete modal)
+    const cardTitle = card.questions.find(q => q.question.trim())?.question || `Card #${index + 1}`;
+    
     return (
       <motion.div 
         key={card.id} 
@@ -44,7 +55,7 @@ const CardList = ({ cards, categories, setCards, onEditCard }) => {
               <Edit2 size={16} />
             </button>
             <button 
-              onClick={() => handleDeleteCard(card.id)} 
+              onClick={() => showDeleteConfirmation(card)} 
               className="p-1.5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
               title="Delete card"
             >
@@ -94,6 +105,9 @@ const CardList = ({ cards, categories, setCards, onEditCard }) => {
     );
   }
 
+  // Find the title of the card to delete (for display in modal)
+  const cardToDeleteTitle = cardToDelete?.questions.find(q => q.question.trim())?.question || '';
+
   return (
     <section className="mt-12">
       <div className="flex items-center justify-between mb-6">
@@ -109,6 +123,18 @@ const CardList = ({ cards, categories, setCards, onEditCard }) => {
       <div className="space-y-4">
         {cards.map((card, index) => renderCardPreview(card, index))}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmationModal
+        isOpen={cardToDelete !== null}
+        onClose={() => setCardToDelete(null)}
+        onConfirm={handleDeleteCard}
+        title="Delete Card"
+        message="Are you sure you want to delete this card? This action cannot be undone."
+        itemName={cardToDeleteTitle}
+        confirmButtonText="Delete Card"
+        type="danger"
+      />
     </section>
   );
 };
