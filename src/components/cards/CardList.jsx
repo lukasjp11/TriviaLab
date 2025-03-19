@@ -112,12 +112,6 @@ const CardList = ({ cards, categories, setCards, onEditCard }) => {
     <section className="mt-12">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Your Cards</h2>
-        <div className="flex items-center">
-          <button className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-            <ArrowDownUp size={16} />
-            <span>Sort</span>
-          </button>
-        </div>
       </div>
       
       <div className="space-y-4">

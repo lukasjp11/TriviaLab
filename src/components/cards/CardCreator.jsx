@@ -40,23 +40,18 @@ const CardCreator = ({
   };
 
   const handleClearForm = () => {
-    if (confirm(isEditingCard 
-      ? 'Cancel editing? Any unsaved changes will be lost.' 
-      : 'Clear the current form? This will remove all unsaved questions and answers.'
-    )) {
-      // Reset to a new card
-      setCurrentCard({
-        id: generateId(),
-        questions: categories.map(cat => ({ category: cat.name, question: '', answer: '' }))
-      });
-      
-      // Exit editing mode if needed
-      if (isEditingCard) {
-        setIsEditingCard(false);
-      }
-      
-      toast('Form cleared', { icon: '🧹' });
+    // Reset to a new card
+    setCurrentCard({
+      id: generateId(),
+      questions: categories.map(cat => ({ category: cat.name, question: '', answer: '' }))
+    });
+    
+    // Exit editing mode if needed
+    if (isEditingCard) {
+      setIsEditingCard(false);
     }
+    
+    toast('Form cleared', { icon: '🧹' });
   };
 
   return (
