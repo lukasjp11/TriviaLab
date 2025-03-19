@@ -4,7 +4,7 @@ import { Edit2, Trash2, ArrowDownUp } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { SUCCESS } from '../../utils/constants';
 
-const CardList = ({ cards, categories, setCards }) => {
+const CardList = ({ cards, categories, setCards, onEditCard }) => {
   const handleDeleteCard = (cardId) => {
     if (confirm('Are you sure you want to delete this card?')) {
       setCards(cards.filter(card => card.id !== cardId));
@@ -13,12 +13,10 @@ const CardList = ({ cards, categories, setCards }) => {
   };
 
   const handleEditCard = (card) => {
-    // This would typically be handled by the parent component
-    // by passing a function to update the current card being edited
-    toast(
-      'Edit card functionality is not implemented in this preview', 
-      { icon: '🔧' }
-    );
+    if (typeof onEditCard === 'function') {
+      onEditCard(card);
+      toast.success('Card ready for editing');
+    }
   };
 
   const renderCardPreview = (card, index) => {

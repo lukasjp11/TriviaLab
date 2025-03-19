@@ -24,6 +24,7 @@ function App() {
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showCardPreview, setShowCardPreview] = useState(false);
   const [isFirstVisit, setIsFirstVisit] = useLocalStorage('firstVisit', true);
+  const [isEditingCard, setIsEditingCard] = useState(false);
   
   // Create a function to generate empty card with current categories
   const createEmptyCard = () => ({
@@ -33,6 +34,29 @@ function App() {
   
   // Initial card state
   const [currentCard, setCurrentCard] = useState(createEmptyCard);
+
+  // Function to handle editing a card
+  const handleEditCard = (card) => {
+    setCurrentCard(card);
+    setIsEditingCard(true);
+    // Scroll to the top to show the editor
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Function to save a card (new or edited)
+  const handleSaveCard = (card) => {
+    if (isEditingCard) {
+      // Update existing card
+      setCards(cards.map(c => c.id === card.id ? card : c));
+      setIsEditingCard(false);
+    } else {
+      // Add new card
+      setCards([...cards, card]);
+    }
+    
+    // Reset form with a new empty card
+    setCurrentCard(createEmptyCard());
+  };
 
   // Check if it's the user's first visit
   useEffect(() => {
@@ -44,8 +68,11 @@ function App() {
 
   // Update currentCard when categories change
   useEffect(() => {
-    setCurrentCard(createEmptyCard());
-  }, [categories]);
+    // Only update if not in editing mode
+    if (!isEditingCard) {
+      setCurrentCard(createEmptyCard());
+    }
+  }, [categories, isEditingCard]);
 
   return (
     <ThemeProvider>
@@ -62,6 +89,9 @@ function App() {
                   setCards={setCards}
                   currentCard={currentCard}
                   setCurrentCard={setCurrentCard}
+                  onSaveCard={handleSaveCard}
+                  isEditingCard={isEditingCard}
+                  setIsEditingCard={setIsEditingCard}
                 />
                 
                 <CategoryManager 
@@ -90,6 +120,7 @@ function App() {
               cards={cards} 
               categories={categories}
               setCards={setCards}
+              onEditCard={handleEditCard}
             />
           )}
         </main>
