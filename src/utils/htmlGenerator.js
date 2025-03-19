@@ -71,7 +71,7 @@ export function generateHtml(cards, categories) {
               box-sizing: border-box;
               padding: 2mm;
               page-break-inside: avoid;
-              background-color: #f5f5f5;
+              background-color: #64a7d9;
               overflow: hidden;
               margin: 0;
               position: relative;
@@ -100,8 +100,8 @@ export function generateHtml(cards, categories) {
               flex-grow: 1;
           }
   
-          .category:last-child {
-              border-bottom: none;
+          .category:nth-child(6) {
+             border-bottom: none;
           }
   
           .marker {
