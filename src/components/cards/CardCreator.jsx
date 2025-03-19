@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import React from 'react';
 import { PlusCircle, Save, Trash, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { generateId, SUCCESS } from '../../utils/constants';
 
-const CardCreator = ({ categories, cards, setCards }) => {
-  const [currentCard, setCurrentCard] = useState(() => ({
-    id: generateId(),
-    questions: categories.map(cat => ({ category: cat.name, question: '', answer: '' }))
-  }));
+const CardCreator = ({ categories, cards, setCards, currentCard, setCurrentCard }) => {
+  // Safety check - if currentCard is undefined, create a new one
+  if (!currentCard || !currentCard.questions) {
+    console.warn("CardCreator received undefined currentCard, creating a new one");
+    setCurrentCard({
+      id: generateId(),
+      questions: categories.map(cat => ({ category: cat.name, question: '', answer: '' }))
+    });
+    return null; // Return null to prevent rendering with invalid state
+  }
 
   const handleQuestionChange = (index, field, value) => {
     const newQuestions = [...currentCard.questions];
@@ -20,10 +25,13 @@ const CardCreator = ({ categories, cards, setCards }) => {
     // Only add if card has at least one filled question
     if (currentCard.questions.some(q => q.question.trim() !== '')) {
       setCards([...cards, currentCard]);
+      
+      // Reset current card with a new ID and empty questions
       setCurrentCard({
         id: generateId(),
         questions: categories.map(cat => ({ category: cat.name, question: '', answer: '' }))
       });
+      
       toast.success(SUCCESS.CARD_ADDED);
     } else {
       toast.error('Please fill at least one question before adding a card');

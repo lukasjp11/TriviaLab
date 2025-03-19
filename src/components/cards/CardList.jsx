@@ -15,7 +15,10 @@ const CardList = ({ cards, categories, setCards }) => {
   const handleEditCard = (card) => {
     // This would typically be handled by the parent component
     // by passing a function to update the current card being edited
-    toast.info('Card edit functionality is not implemented in this preview');
+    toast(
+      'Edit card functionality is not implemented in this preview', 
+      { icon: '🔧' }
+    );
   };
 
   const renderCardPreview = (card, index) => {

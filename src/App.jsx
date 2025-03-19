@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { AnimatePresence } from 'framer-motion';
 import { useLocalStorage } from './hooks/useLocalStorage';
-import { defaultCategories } from './utils/constants';
+import { defaultCategories, generateId } from './utils/constants';
 
 // Components
 import Header from './components/layout/Header';
@@ -24,6 +24,15 @@ function App() {
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [showCardPreview, setShowCardPreview] = useState(false);
   const [isFirstVisit, setIsFirstVisit] = useLocalStorage('firstVisit', true);
+  
+  // Create a function to generate empty card with current categories
+  const createEmptyCard = () => ({
+    id: generateId(),
+    questions: categories.map(cat => ({ category: cat.name, question: '', answer: '' }))
+  });
+  
+  // Initial card state
+  const [currentCard, setCurrentCard] = useState(createEmptyCard);
 
   // Check if it's the user's first visit
   useEffect(() => {
@@ -32,6 +41,11 @@ function App() {
       setIsFirstVisit(false);
     }
   }, [isFirstVisit, setIsFirstVisit]);
+
+  // Update currentCard when categories change
+  useEffect(() => {
+    setCurrentCard(createEmptyCard());
+  }, [categories]);
 
   return (
     <ThemeProvider>
@@ -46,6 +60,8 @@ function App() {
                   categories={categories} 
                   cards={cards}
                   setCards={setCards}
+                  currentCard={currentCard}
+                  setCurrentCard={setCurrentCard}
                 />
                 
                 <CategoryManager 
@@ -60,7 +76,9 @@ function App() {
             rightPanel={
               <ActionPanel 
                 cards={cards}
+                setCards={setCards}
                 categories={categories}
+                setCategories={setCategories}
                 showCardPreview={showCardPreview}
                 setShowCardPreview={setShowCardPreview}
               />

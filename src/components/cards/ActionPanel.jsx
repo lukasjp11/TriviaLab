@@ -1,13 +1,15 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Download, Printer, Eye, EyeOff, Upload, Database, HelpCircle } from 'lucide-react';
+import { Download, Printer, Eye, EyeOff, Upload, Database, HelpCircle, AlertTriangle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { downloadHtml, openPrintWindow } from '../../utils/htmlGenerator';
 import { createBackup, importData } from '../../utils/dataExportImport';
 import { SUCCESS } from '../../utils/constants';
 
-const ActionPanel = ({ cards, categories, showCardPreview, setShowCardPreview }) => {
+const ActionPanel = ({ cards, categories, setCards, setCategories, showCardPreview, setShowCardPreview }) => {
   const [isImporting, setIsImporting] = useState(false);
+  const [showImportConfirm, setShowImportConfirm] = useState(false);
+  const [importFile, setImportFile] = useState(null);
   const fileInputRef = useRef(null);
   
   const handlePrint = () => {
@@ -84,23 +86,47 @@ const ActionPanel = ({ cards, categories, showCardPreview, setShowCardPreview })
     const file = event.target.files?.[0];
     if (!file) return;
     
+    setImportFile(file);
+    setShowImportConfirm(true);
+    
+    // Reset the file input for future imports
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const confirmImport = async () => {
+    if (!importFile) return;
+    
     setIsImporting(true);
+    setShowImportConfirm(false);
     
     try {
-      const importedData = await importData(file);
-      // Here you would typically use this data to update your app state
-      // For now, just show success
-      toast.success(SUCCESS.DATA_IMPORTED);
-      console.log('Imported data:', importedData);
+      const importedData = await importData(importFile);
+      
+      // Update the app state with imported data
+      if (importedData.cards && Array.isArray(importedData.cards)) {
+        setCards(importedData.cards);
+      }
+      
+      if (importedData.categories && Array.isArray(importedData.categories)) {
+        setCategories(importedData.categories);
+      }
+      
+      toast.success(
+        `Successfully imported ${importedData.cards?.length || 0} cards and ${importedData.categories?.length || 0} categories`
+      );
     } catch (error) {
       toast.error(`Import failed: ${error.message}`);
     } finally {
       setIsImporting(false);
-      // Reset the file input
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
+      setImportFile(null);
     }
+  };
+
+  const cancelImport = () => {
+    setShowImportConfirm(false);
+    setImportFile(null);
   };
 
   return (
@@ -201,6 +227,43 @@ const ActionPanel = ({ cards, categories, showCardPreview, setShowCardPreview })
           </div>
         </a>
       </div>
+
+      {/* Import Confirmation Modal */}
+      {showImportConfirm && (
+        <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md p-6">
+            <div className="flex items-start gap-3 mb-4">
+              <AlertTriangle className="text-amber-500 mt-0.5 flex-shrink-0" size={24} />
+              <div>
+                <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">
+                  Import Data
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  This will replace all your current cards and categories. This action cannot be undone.
+                </p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
+                  Are you sure you want to continue?
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex justify-end gap-3 mt-5">
+              <button
+                onClick={cancelImport}
+                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmImport}
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg"
+              >
+                Yes, Import
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 };
