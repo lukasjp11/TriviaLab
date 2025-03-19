@@ -214,16 +214,6 @@ const ActionPanel = ({ cards, categories, setCards, setCategories, showCardPrevi
             </>
           )}
         </button>
-        
-        <a
-          href="#" 
-          className="block text-center text-sm text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 mt-4"
-        >
-          <div className="flex items-center justify-center gap-1">
-            <HelpCircle size={14} />
-            <span>View Help Guide</span>
-          </div>
-        </a>
       </div>
 
       <ImportConfirmationModal
