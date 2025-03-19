@@ -105,8 +105,8 @@ export function generateHtml(cards, categories) {
           }
   
           .marker {
-              width: 25px;
-              height: 25px;
+              width: 20px;
+              height: 20px;
               margin-right: 10px;
               flex-shrink: 0;
               position: relative;
@@ -131,8 +131,8 @@ export function generateHtml(cards, categories) {
           `).join('\n')}
   
           .category-content {
-              font-size: 13pt;
-              line-height: 1.4;
+              font-size: 12pt;
+              line-height: 1.3;
               flex-grow: 1;
               word-wrap: break-word;
               overflow-wrap: break-word;
