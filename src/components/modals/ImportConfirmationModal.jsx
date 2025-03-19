@@ -3,29 +3,10 @@ import { createPortal } from 'react-dom';
 import { X, AlertTriangle, Upload } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 
-/**
- * Modal for confirming data import - rendered as a portal to avoid z-index issues
- */
 const ImportConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
-  // Get current theme from context
   const { darkMode } = useTheme();
-  
-  // Prevent body scrolling when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
-  
   if (!isOpen) return null;
   
-  // Render the modal as a portal directly to document.body
   return createPortal(
     <div 
       style={{ 

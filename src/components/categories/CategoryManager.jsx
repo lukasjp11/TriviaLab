@@ -15,38 +15,31 @@ const CategoryManager = ({
   const [categoryToDelete, setCategoryToDelete] = useState(null);
   
   const handleAddCategory = () => {
-    // Create default category name, adding a number if name already exists
     let baseName = "New Category";
     let name = baseName;
     let counter = 1;
     
-    // Check if name already exists and increment counter until unique
     while (categories.some(cat => cat.name.toLowerCase() === name.toLowerCase())) {
       counter++;
       name = `${baseName} ${counter}`;
     }
     
-    // Create new category with white color
     const newCategory = { 
       id: generateId(), 
       name, 
       color: "#FFFFFF" 
     };
     
-    // Add the new category
     setCategories([...categories, newCategory]);
     
-    // Update all cards to include this new category
     const updatedCards = cards.map(card => ({
       ...card,
       questions: [...card.questions, { category: name, question: '', answer: '' }]
     }));
     setCards(updatedCards);
     
-    // Show success notification
     toast.success(SUCCESS.CATEGORY_ADDED);
     
-    // Optionally, immediately open the edit dialog for the new category
     setEditingCategory({ ...newCategory, originalName: newCategory.name });
   };
   
@@ -66,18 +59,15 @@ const CategoryManager = ({
   const handleDeleteCategory = () => {
     if (!categoryToDelete) return;
     
-    // Remove this category
     const updatedCategories = categories.filter(cat => cat.id !== categoryToDelete.id);
     setCategories(updatedCategories);
     
-    // Remove this category from all cards
     const updatedCards = cards.map(card => ({
       ...card,
       questions: card.questions.filter(q => q.category !== categoryToDelete.name)
     }));
     setCards(updatedCards);
     
-    // Clear the deletion state
     setCategoryToDelete(null);
     
     toast.success(SUCCESS.CATEGORY_DELETED);
@@ -144,15 +134,14 @@ const CategoryManager = ({
         </div>
       )}
 
-      {/* Delete Category Confirmation Modal */}
       <DeleteConfirmationModal
         isOpen={categoryToDelete !== null}
         onClose={() => setCategoryToDelete(null)}
         onConfirm={handleDeleteCategory}
         title="Delete Category"
         message={
-          `Are you sure you want to delete the category "${categoryToDelete?.name}"? ` +
-          "This will remove it from all cards. This action cannot be undone."
+          `Are you sure you want to delete this category? ` +
+          "This will remove it from ALL cards. This action cannot be undone."
         }
         confirmButtonText="Delete Category"
         type="danger"

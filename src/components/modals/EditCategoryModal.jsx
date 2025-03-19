@@ -24,10 +24,8 @@ const EditCategoryModal = ({
   
   const modalRef = useRef(null);
   
-  // Close modal when clicking outside
   useOnClickOutside(modalRef, () => setEditingCategory(null));
   
-  // Focus the name input when the modal opens
   useEffect(() => {
     const timer = setTimeout(() => {
       document.getElementById('category-name-input')?.focus();
@@ -42,12 +40,10 @@ const EditCategoryModal = ({
       color: ''
     };
     
-    // Check if name is empty
     if (!formState.name.trim()) {
       errors.name = ERRORS.REQUIRED_FIELD;
     }
     
-    // Check if name already exists (but not the original name)
     const nameExists = categories.some(
       cat => cat.name.toLowerCase() === formState.name.trim().toLowerCase() && 
              cat.name !== editingCategory.originalName
@@ -57,7 +53,6 @@ const EditCategoryModal = ({
       errors.name = ERRORS.NAME_EXISTS;
     }
     
-    // Check if color is valid
     const colorRegex = /^#([0-9A-F]{3}){1,2}$/i;
     if (!colorRegex.test(formState.color)) {
       errors.color = ERRORS.INVALID_COLOR;
@@ -65,7 +60,6 @@ const EditCategoryModal = ({
     
     setFormState(prev => ({ ...prev, errors }));
     
-    // Return true if no errors
     return !errors.name && !errors.color;
   };
   
@@ -76,7 +70,7 @@ const EditCategoryModal = ({
       [name]: value,
       errors: {
         ...prev.errors,
-        [name]: '' // Clear error when user types
+        [name]: ''
       }
     }));
   };
@@ -88,7 +82,6 @@ const EditCategoryModal = ({
       return;
     }
     
-    // Update the category
     const updatedCategories = categories.map(cat => 
       cat.id === editingCategory.id ? 
         { ...cat, name: formState.name.trim(), color: formState.color } : cat
@@ -96,7 +89,6 @@ const EditCategoryModal = ({
     
     setCategories(updatedCategories);
     
-    // Update category names in cards
     const updatedCards = cards.map(card => ({
       ...card,
       questions: card.questions.map(q => 

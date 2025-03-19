@@ -22,7 +22,6 @@ const ActionPanel = ({ cards, categories, setCards, setCategories, showCardPrevi
     toast.promise(
       new Promise((resolve) => {
         openPrintWindow(cards, categories);
-        // Simulate completion after a brief delay
         setTimeout(resolve, 500);
       }),
       {
@@ -90,7 +89,6 @@ const ActionPanel = ({ cards, categories, setCards, setCategories, showCardPrevi
     setImportFile(file);
     setShowImportConfirm(true);
     
-    // Reset the file input for future imports
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -105,7 +103,6 @@ const ActionPanel = ({ cards, categories, setCards, setCategories, showCardPrevi
     try {
       const importedData = await importData(importFile);
       
-      // Update the app state with imported data
       if (importedData.cards && Array.isArray(importedData.cards)) {
         setCards(importedData.cards);
       }
@@ -229,7 +226,6 @@ const ActionPanel = ({ cards, categories, setCards, setCategories, showCardPrevi
         </a>
       </div>
 
-      {/* Dedicated Import Confirmation Modal */}
       <ImportConfirmationModal
         isOpen={showImportConfirm}
         onClose={cancelImport}

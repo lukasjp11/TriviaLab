@@ -1,15 +1,8 @@
-/**
- * Generates print-ready HTML for trivia cards
- * @param {Array} cards - Array of card objects
- * @param {Array} categories - Array of category objects 
- * @returns {string} Complete HTML document as a string
- */
 export function generateHtml(cards, categories) {
     if (cards.length === 0) {
       throw new Error('No cards available to generate HTML');
     }
   
-    // Start building the HTML document
     let html = `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -271,7 +264,6 @@ export function generateHtml(cards, categories) {
           </div>
       </div>`;
   
-    // Add question cards
     html += `
       <!-- QUESTIONS PAGE -->
       <div class="container questions-container">`;
@@ -307,7 +299,6 @@ export function generateHtml(cards, categories) {
       <!-- ANSWERS PAGE -->
       <div class="container answers-container">`;
       
-    // Add answer cards in reverse order for double-sided printing
     [...cards].reverse().forEach((card, reversedIndex) => {
       const index = cards.length - reversedIndex - 1;
       html += `
@@ -317,7 +308,7 @@ export function generateHtml(cards, categories) {
         
       categories.forEach(category => {
         const questionData = card.questions.find(q => q.category === category.name);
-        if (questionData && questionData.question) { // Only add category if question exists
+        if (questionData && questionData.question) {
           html += `
                   <div class="category">
                       <div class="marker ${category.name.toLowerCase().replace(/\s+/g, '-')}-marker"></div>
@@ -340,11 +331,6 @@ export function generateHtml(cards, categories) {
     return html;
   }
   
-  /**
-   * Opens a new window with the generated HTML for printing
-   * @param {Array} cards - Array of card objects
-   * @param {Array} categories - Array of category objects
-   */
   export function openPrintWindow(cards, categories) {
     try {
       const html = generateHtml(cards, categories);
@@ -358,12 +344,6 @@ export function generateHtml(cards, categories) {
     }
   }
   
-  /**
-   * Downloads the generated HTML as a file
-   * @param {Array} cards - Array of card objects
-   * @param {Array} categories - Array of category objects
-   * @param {string} filename - Name for the downloaded file
-   */
   export function downloadHtml(cards, categories, filename = 'trivia-cards.html') {
     try {
       const html = generateHtml(cards, categories);

@@ -1,6 +1,3 @@
-/**
- * Default categories for the application
- */
 export const defaultCategories = [
     { id: 'cat-1', name: 'History', color: '#3B82F6' },     // Blue
     { id: 'cat-2', name: 'Science', color: '#EAB308' },     // Yellow
@@ -10,26 +7,10 @@ export const defaultCategories = [
     { id: 'cat-6', name: 'Pop Culture', color: '#8B5CF6' }  // Purple
   ];
   
-  /**
-   * Generate a unique ID
-   * @returns {string} A unique ID string
-   */
   export const generateId = () => {
     return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
   };
   
-  /**
-   * App routes
-   */
-  export const ROUTES = {
-    HOME: '/',
-    ABOUT: '/about',
-    HELP: '/help'
-  };
-  
-  /**
-   * Animation variants for Framer Motion
-   */
   export const ANIMATIONS = {
     fadeIn: {
       hidden: { opacity: 0 },
@@ -51,9 +32,6 @@ export const defaultCategories = [
     }
   };
   
-  /**
-   * Common error messages
-   */
   export const ERRORS = {
     REQUIRED_FIELD: 'This field is required',
     NAME_EXISTS: 'This name already exists',
@@ -61,9 +39,6 @@ export const defaultCategories = [
     MIN_CATEGORIES: 'You must have at least one category'
   };
   
-  /**
-   * Common success messages
-   */
   export const SUCCESS = {
     CARD_ADDED: 'Card added successfully',
     CARD_UPDATED: 'Card updated successfully',

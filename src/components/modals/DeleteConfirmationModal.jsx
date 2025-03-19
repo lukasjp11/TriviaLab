@@ -2,26 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { X, AlertTriangle, AlertCircle, Trash2 } from 'lucide-react';
 
-/**
- * Reusable delete confirmation modal
- * 
- * @param {Object} props
- * @param {boolean} props.isOpen - Whether the modal is open
- * @param {Function} props.onClose - Function to call when closing without confirming
- * @param {Function} props.onConfirm - Function to call when confirming deletion
- * @param {string} props.title - Modal title
- * @param {string} props.message - Confirmation message
- * @param {string} props.itemName - Name of the item being deleted (optional)
- * @param {string} props.confirmButtonText - Text for confirm button (default: "Delete")
- * @param {string} props.type - Type of confirmation: "warning" or "danger" (default: "danger")
- */
 const DeleteConfirmationModal = ({ 
   isOpen, 
   onClose, 
   onConfirm, 
   title = "Confirm Deletion", 
   message = "Are you sure you want to delete this item?",
-  itemName = "", 
   confirmButtonText = "Delete",
   type = "danger"
 }) => {
@@ -65,14 +51,6 @@ const DeleteConfirmationModal = ({
           <p className="text-gray-600 dark:text-gray-300 mb-2">
             {message}
           </p>
-          
-          {itemName && (
-            <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md mb-4">
-              <p className="text-gray-800 dark:text-gray-200 font-medium text-center">
-                &quot;{itemName}&quot;
-              </p>
-            </div>
-          )}
           
           <div className="mt-6 flex justify-end gap-3">
             <button

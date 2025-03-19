@@ -22,7 +22,6 @@
     @apply font-medium tracking-tight;
   }
 
-  /* Custom scrollbar */
   ::-webkit-scrollbar {
     @apply w-2;
   }
@@ -72,7 +71,6 @@
   }
 }
 
-/* Animations */
 .fade-in {
   animation: fadeIn 0.3s var(--animation-curve);
 }

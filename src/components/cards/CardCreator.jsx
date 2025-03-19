@@ -12,14 +12,13 @@ const CardCreator = ({
   isEditingCard,
   setIsEditingCard
 }) => {
-  // Safety check - if currentCard is undefined, create a new one
   if (!currentCard || !currentCard.questions) {
     console.warn("CardCreator received undefined currentCard, creating a new one");
     setCurrentCard({
       id: generateId(),
       questions: categories.map(cat => ({ category: cat.name, question: '', answer: '' }))
     });
-    return null; // Return null to prevent rendering with invalid state
+    return null;
   }
 
   const handleQuestionChange = (index, field, value) => {
@@ -29,7 +28,6 @@ const CardCreator = ({
   };
 
   const handleSaveCard = () => {
-    // Only save if card has at least one filled question
     if (currentCard.questions.some(q => q.question.trim() !== '')) {
       onSaveCard(currentCard);
       
@@ -40,13 +38,11 @@ const CardCreator = ({
   };
 
   const handleClearForm = () => {
-    // Reset to a new card
     setCurrentCard({
       id: generateId(),
       questions: categories.map(cat => ({ category: cat.name, question: '', answer: '' }))
     });
     
-    // Exit editing mode if needed
     if (isEditingCard) {
       setIsEditingCard(false);
     }

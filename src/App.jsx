@@ -4,7 +4,6 @@ import { AnimatePresence } from 'framer-motion';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { defaultCategories, generateId } from './utils/constants';
 
-// Components
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Dashboard from './components/layout/Dashboard';
@@ -17,48 +16,37 @@ import WelcomeModal from './components/modals/WelcomeModal';
 import ThemeProvider from './contexts/ThemeContext';
 
 function App() {
-  // State management
   const [categories, setCategories] = useLocalStorage('triviaCategories', defaultCategories);
   const [cards, setCards] = useLocalStorage('triviaCards', []);
   const [editingCategory, setEditingCategory] = useState(null);
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
-  const [showCardPreview, setShowCardPreview] = useState(false);
+  const [showCardPreview, setShowCardPreview] = useState(true);
   const [isFirstVisit, setIsFirstVisit] = useLocalStorage('firstVisit', true);
   const [isEditingCard, setIsEditingCard] = useState(false);
   
-  // Create a function to generate empty card with current categories
   const createEmptyCard = () => ({
     id: generateId(),
     questions: categories.map(cat => ({ category: cat.name, question: '', answer: '' }))
   });
   
-  // Initial card state
   const [currentCard, setCurrentCard] = useState(createEmptyCard);
 
-  // Function to handle editing a card
   const handleEditCard = (card) => {
     setCurrentCard(card);
     setIsEditingCard(true);
-    // Scroll to the top to show the editor
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Function to save a card (new or edited)
   const handleSaveCard = (card) => {
     if (isEditingCard) {
-      // Update existing card
       setCards(cards.map(c => c.id === card.id ? card : c));
       setIsEditingCard(false);
     } else {
-      // Add new card
       setCards([...cards, card]);
     }
-    
-    // Reset form with a new empty card
     setCurrentCard(createEmptyCard());
   };
 
-  // Check if it's the user's first visit
   useEffect(() => {
     if (isFirstVisit) {
       setShowWelcomeModal(true);
@@ -66,9 +54,7 @@ function App() {
     }
   }, [isFirstVisit, setIsFirstVisit]);
 
-  // Update currentCard when categories change
   useEffect(() => {
-    // Only update if not in editing mode
     if (!isEditingCard) {
       setCurrentCard(createEmptyCard());
     }
@@ -127,7 +113,6 @@ function App() {
         
         <Footer />
         
-        {/* Modals */}
         <AnimatePresence>
           {editingCategory && (
             <EditCategoryModal 
@@ -147,7 +132,6 @@ function App() {
           )}
         </AnimatePresence>
         
-        {/* Toast notifications */}
         <Toaster position="bottom-right" />
       </div>
     </ThemeProvider>

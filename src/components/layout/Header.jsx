@@ -11,7 +11,6 @@ const Header = () => {
     <header className="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900/20">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo and title */}
           <div className="flex items-center gap-2">
             <div className="flex items-center text-blue-600 dark:text-blue-400">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
@@ -23,7 +22,6 @@ const Header = () => {
             </div>
           </div>
           
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-4">
             <a 
               href="https://github.com/lukasjp11/trivialab" 
@@ -44,7 +42,6 @@ const Header = () => {
             </button>
           </nav>
           
-          {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -57,7 +54,6 @@ const Header = () => {
         </div>
       </div>
       
-      {/* Mobile menu */}
       {menuOpen && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
