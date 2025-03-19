@@ -15,29 +15,39 @@ const CategoryManager = ({
   const [categoryToDelete, setCategoryToDelete] = useState(null);
   
   const handleAddCategory = () => {
-    // Show prompt for new category name
-    const name = prompt('Enter new category name:');
-    if (!name || !name.trim()) return;
+    // Create default category name, adding a number if name already exists
+    let baseName = "New Category";
+    let name = baseName;
+    let counter = 1;
     
-    // Make sure name doesn't already exist
-    if (categories.some(cat => cat.name.toLowerCase() === name.trim().toLowerCase())) {
-      toast.error(ERRORS.NAME_EXISTS);
-      return;
+    // Check if name already exists and increment counter until unique
+    while (categories.some(cat => cat.name.toLowerCase() === name.toLowerCase())) {
+      counter++;
+      name = `${baseName} ${counter}`;
     }
     
-    // Generate a random color
-    const color = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`;
-    const newCategory = { id: generateId(), name: name.trim(), color };
+    // Create new category with white color
+    const newCategory = { 
+      id: generateId(), 
+      name, 
+      color: "#FFFFFF" 
+    };
     
+    // Add the new category
     setCategories([...categories, newCategory]);
-    toast.success(SUCCESS.CATEGORY_ADDED);
     
     // Update all cards to include this new category
     const updatedCards = cards.map(card => ({
       ...card,
-      questions: [...card.questions, { category: name.trim(), question: '', answer: '' }]
+      questions: [...card.questions, { category: name, question: '', answer: '' }]
     }));
     setCards(updatedCards);
+    
+    // Show success notification
+    toast.success(SUCCESS.CATEGORY_ADDED);
+    
+    // Optionally, immediately open the edit dialog for the new category
+    setEditingCategory({ ...newCategory, originalName: newCategory.name });
   };
   
   const handleEditCategory = (category) => {
@@ -99,7 +109,7 @@ const CategoryManager = ({
           >
             <div className="flex items-center">
               <div 
-                className="w-6 h-6 mr-3 rounded-md" 
+                className="w-6 h-6 mr-3 rounded-md border border-gray-200 dark:border-gray-600" 
                 style={{ backgroundColor: category.color }}
               ></div>
               <span className="font-medium text-gray-800 dark:text-gray-200">{category.name}</span>
