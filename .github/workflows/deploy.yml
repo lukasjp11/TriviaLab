@@ -34,8 +34,8 @@ jobs:
       - name: Build project
         run: npm run build
       
-      - name: Add .nojekyll file
-        run: touch ./dist/.nojekyll
+      # - name: Add .nojekyll file
+      #   run: touch ./dist/.nojekyll
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
