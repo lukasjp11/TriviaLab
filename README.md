@@ -16,7 +16,6 @@ TriviaLab is a web application for creating trivia cards that can be easily prin
 - Import/export data as JSON backup
 - Dark mode support
 - Mobile-friendly design
-- Works as a Progressive Web App (PWA)
 
 ## 📱 Usage
 
