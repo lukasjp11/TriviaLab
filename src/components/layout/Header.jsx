@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sun, Moon, Github } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../../contexts/ThemeContext';
 
@@ -22,24 +22,14 @@ const Header = () => {
             </div>
           </div>
           
-          <nav className="hidden md:flex items-center space-x-4">
-            <a 
-              href="https://github.com/lukasjp11/trivialab" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-2"
-              aria-label="GitHub"
-            >
-              <Github size={18} />
-              <span>GitHub</span>
-            </a>
-            
+          <nav className="hidden md:flex items-center">
             <button
               onClick={toggleTheme}
-              className="p-2 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors" 
+              className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" 
               aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+              <span>Theme</span>
             </button>
           </nav>
           
