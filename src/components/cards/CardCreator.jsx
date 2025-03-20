@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Save, RefreshCw, Edit2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -12,6 +12,28 @@ const CardCreator = ({
   isEditingCard,
   setIsEditingCard
 }) => {
+  const textareaRefs = useRef({});
+  
+  const autoResizeTextarea = (element) => {
+    if (element) {
+      element.style.height = 'auto';
+      element.style.height = element.scrollHeight + 'px';
+    }
+  };
+  
+  useEffect(() => {
+    if (currentCard && currentCard.questions) {
+      currentCard.questions.forEach((_, index) => {
+        if (textareaRefs.current[`question-${index}`]) {
+          autoResizeTextarea(textareaRefs.current[`question-${index}`]);
+        }
+        if (textareaRefs.current[`answer-${index}`]) {
+          autoResizeTextarea(textareaRefs.current[`answer-${index}`]);
+        }
+      });
+    }
+  }, [currentCard]);
+  
   if (!currentCard || !currentCard.questions) {
     console.warn("CardCreator received undefined currentCard, creating a new one");
     setCurrentCard({
@@ -105,11 +127,16 @@ const CardCreator = ({
                   Question
                 </label>
                 <textarea
-                  className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                  rows="2"
+                  ref={(el) => textareaRefs.current[`question-${index}`] = el}
+                  className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 overflow-hidden"
                   value={q.question}
-                  onChange={(e) => handleQuestionChange(index, 'question', e.target.value)}
+                  onChange={(e) => {
+                    handleQuestionChange(index, 'question', e.target.value);
+                    autoResizeTextarea(e.target);
+                  }}
                   placeholder={`Enter a question for ${q.category}...`}
+                  style={{ resize: 'none', minHeight: '3rem' }}
+                  rows="1"
                 ></textarea>
               </div>
               
@@ -118,11 +145,16 @@ const CardCreator = ({
                   Answer
                 </label>
                 <textarea
-                  className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                  rows="2"
+                  ref={(el) => textareaRefs.current[`answer-${index}`] = el}
+                  className="w-full p-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 overflow-hidden"
                   value={q.answer}
-                  onChange={(e) => handleQuestionChange(index, 'answer', e.target.value)}
+                  onChange={(e) => {
+                    handleQuestionChange(index, 'answer', e.target.value);
+                    autoResizeTextarea(e.target);
+                  }}
                   placeholder="Enter the answer..."
+                  style={{ resize: 'none', minHeight: '3rem' }}
+                  rows="1"
                 ></textarea>
               </div>
             </div>
