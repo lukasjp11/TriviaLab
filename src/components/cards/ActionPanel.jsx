@@ -145,7 +145,7 @@ const ActionPanel = ({ cards, categories, setCards, setCategories, showCardPrevi
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: 0.1 }}
-      className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md sticky top-4"
+      className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md sticky top-20"
     >
       <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-5">Actions</h2>
       
