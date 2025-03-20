@@ -48,19 +48,6 @@ function App() {
   };
 
   useEffect(() => {
-    if (isFirstVisit) {
-      setShowWelcomeModal(true);
-      setIsFirstVisit(false);
-    }
-  }, [isFirstVisit, setIsFirstVisit]);
-
-  useEffect(() => {
-    if (!isEditingCard) {
-      setCurrentCard(createEmptyCard());
-    }
-  }, [categories, isEditingCard]);
-
-  useEffect(() => {
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator.standalone === true);
     if (isStandalone) {
       document.body.classList.add('standalone-mode');
