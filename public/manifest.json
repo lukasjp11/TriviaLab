@@ -2,17 +2,18 @@
   "name": "TriviaLab",
   "short_name": "TriviaLab",
   "display": "standalone",
+  "start_url": "/trivialab/",
   "theme_color": "#1f2937",
   "background_color": "#1f2937",
   "description": "Trivia Card Generator",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "/trivialab/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "/trivialab/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
