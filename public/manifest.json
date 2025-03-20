@@ -1,0 +1,16 @@
+{
+  "name": "TriviaLab",
+  "short_name": "TriviaLab",
+  "display": "standalone",
+  "theme_color": "#60a5fa",
+  "background_color": "#1f2937",
+  "description": "Trivia Card Generator",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
