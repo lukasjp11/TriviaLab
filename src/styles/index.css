@@ -71,6 +71,16 @@
   }
 }
 
+@layer utilities {
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 .fade-in {
   animation: fadeIn 0.3s var(--animation-curve);
 }
@@ -94,3 +104,4 @@
     transform: translateY(0); 
   }
 }
+
