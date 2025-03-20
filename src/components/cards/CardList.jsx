@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Edit2, Trash2, ArrowDownUp } from 'lucide-react';
+import { Edit2, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { SUCCESS } from '../../utils/constants';
 import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
+import BackToTop from '../ui/BackToTop';
 
 const CardList = ({ cards, categories, setCards, onEditCard }) => {
   const [cardToDelete, setCardToDelete] = useState(null);
@@ -103,25 +104,29 @@ const CardList = ({ cards, categories, setCards, onEditCard }) => {
   }
 
   return (
-    <section className="mt-12">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Your Cards</h2>
-      </div>
-      
-      <div className="space-y-4">
-        {cards.map((card, index) => renderCardPreview(card, index))}
-      </div>
+    <>
+      <section className="mt-12" id="card-list">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Your Cards</h2>
+        </div>
+        
+        <div className="space-y-4">
+          {cards.map((card, index) => renderCardPreview(card, index))}
+        </div>
 
-      <DeleteConfirmationModal
-        isOpen={cardToDelete !== null}
-        onClose={() => setCardToDelete(null)}
-        onConfirm={handleDeleteCard}
-        title="Delete Card"
-        message="Are you sure you want to delete this card? This action cannot be undone."
-        confirmButtonText="Delete Card"
-        type="danger"
-      />
-    </section>
+        <DeleteConfirmationModal
+          isOpen={cardToDelete !== null}
+          onClose={() => setCardToDelete(null)}
+          onConfirm={handleDeleteCard}
+          title="Delete Card"
+          message="Are you sure you want to delete this card? This action cannot be undone."
+          confirmButtonText="Delete Card"
+          type="danger"
+        />
+      </section>
+      
+      <BackToTop />
+    </>
   );
 };
 
