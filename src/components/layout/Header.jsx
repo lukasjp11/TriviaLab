@@ -8,8 +8,6 @@ const Header = () => {
   
   return (
     <header className="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-sm dark:shadow-gray-900/20 w-full">
-      <div className="w-full h-10 absolute top-0 -translate-y-full bg-white dark:bg-gray-800"></div>
-      
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
