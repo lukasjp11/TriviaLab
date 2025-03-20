@@ -27,7 +27,8 @@ const Header = () => {
               href="https://github.com/lukasjp11/trivialab" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 flex items-center gap-1.5 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-2"
+              aria-label="GitHub"
             >
               <Github size={18} />
               <span>GitHub</span>
