@@ -1,16 +1,18 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Download, Printer, Eye, EyeOff, Upload, Database, HelpCircle } from 'lucide-react';
+import { Download, Printer, Eye, EyeOff, Upload, Database, HelpCircle, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { downloadHtml, openPrintWindow } from '../../utils/htmlGenerator';
 import { createBackup, importData } from '../../utils/dataExportImport';
-import { SUCCESS } from '../../utils/constants';
+import { SUCCESS, defaultCategories } from '../../utils/constants';
 import ImportConfirmationModal from '../modals/ImportConfirmationModal';
+import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
 
 const ActionPanel = ({ cards, categories, setCards, setCategories, showCardPreview, setShowCardPreview }) => {
   const [isImporting, setIsImporting] = useState(false);
   const [showImportConfirm, setShowImportConfirm] = useState(false);
   const [importFile, setImportFile] = useState(null);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const fileInputRef = useRef(null);
   
   const handlePrint = () => {
@@ -127,6 +129,17 @@ const ActionPanel = ({ cards, categories, setCards, setCategories, showCardPrevi
     setImportFile(null);
   };
 
+  const handleResetAll = () => {
+    setShowResetConfirm(true);
+  };
+
+  const confirmReset = () => {
+    setCards([]);
+    setCategories(defaultCategories);
+    setShowResetConfirm(false);
+    toast.success('All data has been reset');
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -185,6 +198,14 @@ const ActionPanel = ({ cards, categories, setCards, setCategories, showCardPrevi
               className="hidden"
             />
           </div>
+          
+          <button 
+            onClick={handleResetAll}
+            className="w-full mt-3 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded-lg transition-colors"
+          >
+            <Trash2 size={18} />
+            <span>Reset All Data</span>
+          </button>
         </div>
         
         <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
@@ -220,6 +241,16 @@ const ActionPanel = ({ cards, categories, setCards, setCategories, showCardPrevi
         isOpen={showImportConfirm}
         onClose={cancelImport}
         onConfirm={confirmImport}
+      />
+      
+      <DeleteConfirmationModal
+        isOpen={showResetConfirm}
+        onClose={() => setShowResetConfirm(false)}
+        onConfirm={confirmReset}
+        title="Reset All Data"
+        message="Are you sure you want to reset all data? This will delete all your cards and restore default categories. This action cannot be undone."
+        confirmButtonText="Reset Everything"
+        type="danger"
       />
     </motion.div>
   );
