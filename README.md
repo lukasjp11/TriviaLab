@@ -36,7 +36,7 @@ The `/sample` folder contains example data files that can be imported into Trivi
 - `bible-trivia-danish.json`: A backup file containing Danish Bible trivia questions that can be imported using the app's "Import" feature. This provides a starting point for users who want to see how the app works with real content.
 
 To use the sample data:
-1. Download the `bibletrivia-danish.json` file
+1. Download the `bible-trivia-danish.json` file
 2. Click on "Import Data"
 3. Select the JSON file from the `/sample` folder
 4. Confirm the import
