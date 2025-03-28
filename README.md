@@ -1,5 +1,4 @@
 # <img src="https://raw.githubusercontent.com/lukasjp11/trivialab/main/public/android-chrome-192x192.png" alt="TriviaLab Logo" width="30" height="30"> TriviaLab - Trivia Card Generator
-
 [![React](https://img.shields.io/badge/React-18.0.0-61DAFB?logo=react)](https://reactjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3.0-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/Vite-4.4.0-646CFF?logo=vite)](https://vitejs.dev/)
@@ -7,7 +6,6 @@
 TriviaLab is a web application for creating trivia cards that can be easily printed. Perfect for pastors, teachers, and trivia enthusiasts looking to create trivia cards.
 
 ## ✨ Features
-
 - Create trivia cards with questions and answers
 - Organize questions by categories
 - Customize categories with different colors
@@ -18,7 +16,6 @@ TriviaLab is a web application for creating trivia cards that can be easily prin
 - Mobile-friendly design
 
 ## 📱 Usage
-
 1. Create categories or use the default ones
 2. Add trivia cards with questions for each category
 3. Customize and organize your trivia content
@@ -26,13 +23,20 @@ TriviaLab is a web application for creating trivia cards that can be easily prin
 5. Use the backup feature to save your work
 
 ## 🖨️ Printing Guide
-
 For best results when printing your trivia cards:
-
 1. Use the "Print Cards" button to open the print-ready version
 2. Select double-sided printing in your browser's print dialog
 3. Choose A4 paper size
 4. Set margins to "None" or the minimum your printer allows
 5. Make sure "Background Graphics" is enabled in your print settings
 
+## 📁 Sample Data
+The `/sample` folder contains example data files that can be imported into TriviaLab:
 
+- `bible-trivia-danish.json`: A backup file containing Danish Bible trivia questions that can be imported using the app's "Import" feature. This provides a starting point for users who want to see how the app works with real content.
+
+To use the sample data:
+1. Download the `bibletrivia-danish.json` file
+2. Click on "Import Data"
+3. Select the JSON file from the `/sample` folder
+4. Confirm the import
